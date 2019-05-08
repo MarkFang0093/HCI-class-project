@@ -1,0 +1,224 @@
+// See https://github.com/dialogflow/dialogflow-fulfillment-nodejs
+// for Dialogflow fulfillment library docs, samples, and to report issues
+'use strict';
+ //TODO: REMOVE OTHER INTENTS, EXPAND PLACEMENT AND TAKE INTENTS, RECEIVE DATA FROM DATABASE IN FUNCTIONS
+// TO DECIDE WHICH SHELF COORDINATES ARE AVAILABLE (facebook chat youtube link), SLOT FILLING??
+// Import Admin SDK
+/*
+var admin = require("firebase-admin");
+
+// Get a database reference to our posts
+var db = admin.database();
+var ref = db.ref("elevating-shelf-agent/Coordinate1/weight");
+*/
+const functions = require('firebase-functions');
+const {WebhookClient} = require('dialogflow-fulfillment');
+const {Card, Suggestion} = require('dialogflow-fulfillment');
+const requestNode = require('request');
+const NUMBER_ARGUMENT ='number';
+//const ITEM_ARGUMENT_SAVE = 'ItemTypes';
+const ITEM_ARGUMENT = 'ItemTypes';
+//const tempNum = '';
+//const tempItem = '';
+process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
+
+function saveToDb(numberToSave) {
+//  	tempNum = numberToSave;
+    const options = {
+        url: 'https://elevating-shelf-agent.firebaseio.com/picture.json',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+            "number" : numberToSave
+        })
+    };
+    requestNode(options, function(error, requestInternal, body){
+        console.log(body);
+ });
+}
+/*
+function coordinateA1Db(numberToSave) {
+ // 	tempItem = numberToSave;
+    const options = {
+        url: 'https://elevating-shelf-agent.firebaseio.com/Coordinate1.json',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+            "value" : numberToSave
+        })
+    };
+    requestNode(options, function(error, requestInternal, body){
+        console.log(body);
+ });
+}
+
+function saveCoorRaise(numberToSave) {
+ // 	tempItem = numberToSave;
+    const options = {
+        url: 'https://elevating-shelf-agent.firebaseio.com/Raise.json',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+            "value" : numberToSave
+        })
+    };
+    requestNode(options, function(error, requestInternal, body){
+        console.log(body);
+ });
+}
+
+function coordinateA2Db(numberToSave) {
+//  	tempItem = numberToSave;
+    const options = {
+        url: 'https://elevating-shelf-agent.firebaseio.com/Coordinate2.json',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+            "value" : numberToSave
+        })
+    };
+    requestNode(options, function(error, requestInternal, body){
+        console.log(body);
+ });
+}
+
+function coordinateA3Db(numberToSave) {
+//  	tempItem = numberToSave;
+    const options = {
+        url: 'https://elevating-shelf-agent.firebaseio.com/Coordinate3.json',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+            "value" : numberToSave
+        })
+    };
+    requestNode(options, function(error, requestInternal, body){
+        console.log(body);
+ });
+}
+
+function itemWanted(numberToSave) {
+//  	tempItem = numberToSave;
+    const options = {
+        url: 'https://elevating-shelf-agent.firebaseio.com/curItem.json',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+            "value" : numberToSave
+        })
+    };
+    requestNode(options, function(error, requestInternal, body){
+        console.log(body);
+ });
+}
+*/
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
+  const agent = new WebhookClient({ request, response });
+  console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
+  console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
+ 
+  function welcome(agent) {
+    agent.add(`Welcome to my agent!`);
+  }
+ 
+  function fallback(agent) {
+    agent.add(`I didn't understand`);
+    agent.add(`I'm sorry, can you try again?`);
+  }
+  
+  function place(agent) {
+    agent.add(`Excellent! What item would you like to add`);
+}
+  function take (agent) {
+    agent.add(`Excellent! What item would you like to take`);
+}
+  
+  function TA1(agent) {
+//    console.log("test");
+//    let temp = request.body.queryResult.parameters[ITEM_ARGUMENT];
+//    let num = 1;
+//  	coordinateA1Db(``);
+//    saveCoorRaise(num);
+    agent.add(`Take the salt from coordinate A1`);
+   // Attach an asynchronous callback to read the data at our posts reference
+/*ref.on("value", function(snapshot) {
+  console.log(snapshot.val());
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});*/
+  }
+
+
+  // DANGER: FUNCTIONS MUST BE SPECIFIC OTHERWISE NONE WRITE TO FIREBASE
+  function TA2(agent) {
+ //   let temp = request.body.queryResult.parameters[ITEM_ARGUMENT];
+//  	let num = 2;
+ // 	coordinateA1Db(``);
+ //   saveCoorRaise(num);
+    agent.add(`Take the sugar from coordinate A2`);
+  }
+  
+  function TA3(agent) {
+  //  let temp = request.body.queryResult.parameters[ITEM_ARGUMENT];
+//    let num = 3;
+ // 	coordinateA1Db(``);
+//    saveCoorRaise(num);
+    agent.add(`Take the flour from coordinate A3`);
+  }
+  
+  function PA1(agent) {
+   // let temp = request.body.queryResult.parameters[ITEM_ARGUMENT];
+ // 	coordinateA1Db(temp);
+    agent.add(`Place the salt on coordinate A1`);
+  }
+  
+  function PA2(agent) {
+//    let temp = request.body.queryResult.parameters[ITEM_ARGUMENT];
+//    coordinateA2Db(temp);
+    agent.add(`Place the sugar on coordinate A2`);
+  }
+  
+  function PA3(agent) {
+ //   let temp = request.body.queryResult.parameters[ITEM_ARGUMENT];
+//    coordinateA3Db(temp);
+    agent.add(`Place the flour on coordinate A3`);
+  }
+/*  function showPicture() {
+      let number = request.body.queryResult.parameters[NUMBER_ARGUMENT];
+      saveToDb(number);
+    //TEST
+    agent.add(`nice ` + number);
+  }
+  */
+  
+// Run the proper function handler based on the matched Dialogflow intent name
+  let intentMap = new Map();
+  intentMap.set('Default Welcome Intent', welcome);
+  intentMap.set('Default Fallback Intent', fallback);
+  // Here you pass as first argument the name of the Intent
+//  intentMap.set('Elevating_OP', showPicture);
+ // intentMap.set('Take - A1', TA1);
+  intentMap.set('T-Salt', TA1);
+  intentMap.set('T-Sugar', TA2);
+  intentMap.set('T-Flour', TA3);
+  intentMap.set('P-Salt', PA1);
+  intentMap.set('P-Sugar', PA2);
+  intentMap.set('P-Flour', PA3);
+//  intentMap.set('Elevating_OP - TAKE_ITEM', Pen_Response);
+//  intentMap.set('Elevating_OP - TAKE_ITEM', Phone_Response);
+  // intentMap.set('your intent name here', yourFunctionHandler);
+  // intentMap.set('your intent name here', googleAssistantHandler);
+  agent.handleRequest(intentMap);
+});
