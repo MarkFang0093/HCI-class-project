@@ -13,9 +13,9 @@ Below are the codes and relevant files for CS639 Manitowac group
 
 ## Authors
 
-* **Akshat Khanna** - *Initial work* - [PurpleBooth](https://github.com/akshat97)
-* **Dong Fang** - *Initial work* - [PurpleBooth](https://github.com/MarkFang0093)
-* **Shawn Ge** - *Initial work* - [PurpleBooth]()
+* **Akshat Khanna** - *Initial work* - [GitHub](https://github.com/akshat97)
+* **Dong Fang** - *Initial work* - [GitHub](https://github.com/MarkFang0093)
+* **Shawn Ge** - *Initial work* - [GitHub]()
 
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
