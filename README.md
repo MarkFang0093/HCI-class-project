@@ -25,4 +25,4 @@ See also the list of [contributors](https://github.com/your/project/contributors
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
-We would like to thank Professor Bilge Mutlu in the Department of Computer Sciences at the University of Wisconsin-Madison for his supervision, his support and advice to our research process.
+We would like to thank Professor Bilge Mutlu(@bmutlu) in the Department of Computer Sciences at the University of Wisconsin-Madison for his supervision, his support and advice to our research process.
