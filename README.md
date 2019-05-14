@@ -1,5 +1,5 @@
 # HCI-class-project
-Below are the codes and relevant files for CS639 Manitowac group
+Below are the codes and relevant files for CS639 Manitowoc group
 
 
 ## Built With
